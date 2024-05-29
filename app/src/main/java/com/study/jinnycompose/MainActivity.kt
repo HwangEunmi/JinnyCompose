@@ -89,11 +89,7 @@ fun PagingContent(
 ) {
     HorizontalPager(
         modifier = modifier,
-        state = pagerState,
-        flingBehavior = PagerDefaults.flingBehavior(
-            state = pagerState,
-            pagerSnapDistance = PagerSnapDistance.atMost(0)
-        ) // TODO : 개선 필요
+        state = pagerState
     ) {
         Column(
             modifier = modifier
