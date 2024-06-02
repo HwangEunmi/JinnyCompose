@@ -1,13 +1,10 @@
 package com.study.jinnycompose
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,21 +16,12 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import coil.compose.AsyncImage
 import com.study.jinnycompose.model.ImageModel
 import com.study.jinnycompose.ui.theme.JinnyComposeTheme
 
@@ -73,6 +61,7 @@ fun MainHome(
             imageList = viewModel.imageList,
             modifier = Modifier
                 .wrapContentWidth()
+                .background(Color.Blue)
         )
     }
 }
@@ -123,34 +112,29 @@ fun ImageCard(
     imageUrl: String,
     modifier: Modifier = Modifier
 ) {
-    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
-    val context = LocalContext.current
-
-    LaunchedEffect(imageUrl) {
-        Glide.with(context)
-            .asBitmap()
-            .load(imageUrl)
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onResourceReady(
-                    resource: Bitmap,
-                    transition: Transition<in Bitmap>?
-                ) {
-                    imageBitmap = resource.asImageBitmap()
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    imageBitmap = null
-                }
-            })
-    }
-
-    imageBitmap?.let {
-        Column(
-            modifier = modifier
-        ) {
-            Image(bitmap = it, contentDescription = null, modifier = modifier)
-        }
-    }
+    AsyncImage(
+        modifier = modifier,
+        model = imageUrl,
+        contentDescription = "",
+        placeholder = painterResource(R.drawable.ic_launcher_foreground)
+    )
+//    var uiState by remember { mutableStateOf(UiState.Loading) }
+//    val painter = rememberAsyncImagePainter(
+//        model = imageUrl,
+//        onState = { state ->
+//            Log.d("THEEND", "uiState: $state")
+//            // uiState = fromAsyncImagePainterState(state)
+//        }
+//    )
+//    Image(
+//            painter = when (uiState) {
+//                UiState.Loading -> painterResource(R.drawable.ic_launcher_foreground)
+//                UiState.Success -> painter
+//                UiState.Error -> painterResource(R.drawable.ic_launcher_background)
+//            },
+//        contentDescription = null,
+//        modifier = modifier
+//    )
 }
 
 @Preview(showBackground = true)
