@@ -74,26 +74,25 @@ fun MainHome(
                 .fillMaxSize()
             // .verticalScroll(scrollState)
         ) {
-            items(viewModel.homeList) { item ->
+            itemsIndexed(viewModel.homeList) { index, item ->
                 when (item) {
                     is HomeListItem.TopPagingContent -> {
-                        val pagerState = rememberPagerState {
-                            item.imageList.size
-                        }
-
-                        PagingContent(
-                            pagerState = pagerState,
-                            imageList = item.imageList,
-                            modifier = Modifier.fillMaxSize()
+                        TabPagerContent(
+                            item = item,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
-                    is HomeListItem.TopPagingSmallContent ->
+                    is HomeListItem.ImageContent -> {
                         ListContent(
                             imageList = item.imageList,
+                            onClickEvent = {},
+                            onSelectedEvent = { true },
                             modifier = Modifier
                                 .wrapContentWidth()
                         )
+                    }
+
 
                     is HomeListItem.Info -> {
 
@@ -177,6 +176,48 @@ fun MainBottomLayout(
         )
     }
 }
+
+@ExperimentalFoundationApi
+@Composable
+private fun TabPagerContent(
+    item: HomeListItem.TopPagingContent,
+    modifier: Modifier = Modifier
+) {
+    val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState {
+        item.imageList.size
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        PagingContent(
+            pagerState = pagerState,
+            imageList = item.imageList,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        ScrollableTabRow(
+            selectedTabIndex = pagerState.currentPage,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item.imageList.forEachIndexed { index, imageUrl ->
+                Tab(
+                    selected = (pagerState.currentPage == index),
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    }) {
+                    ImageCard(
+                        imageUrl = imageUrl,
+                        modifier = Modifier.size(50.dp)
+                    )
+                    Text(text = "")
+                }
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
