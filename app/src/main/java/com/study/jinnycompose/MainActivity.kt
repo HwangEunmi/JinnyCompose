@@ -152,6 +152,31 @@ fun MainAppBar(
         onNavigationIconClick = { /*TODO*/ },
         onLikeIconClick = { /*TODO*/ },
         onShareIconClick = { /*TODO*/ })
+@ExperimentalCoroutinesApi
+@Composable
+fun MainBottomLayout(
+    scrollState: LazyListState,
+    modifier: Modifier = Modifier
+) {
+    val isScrollUp = scrollState.getScrollDirection() == ScrollDirection.Up
+    val isScrollStop = scrollState.getScrollStateAfterStop() == ScrollState.Stop
+    AnimatedVisibility(
+        visible = isScrollUp || isScrollStop,
+        enter = slideInVertically { height ->
+            height
+        },
+        exit = slideOutVertically { height ->
+            height
+        },
+        modifier = modifier
+    ) {
+        BottomButtonLayout(
+            layoutHeight = 100.dp,
+            onButtonClick = {},
+            modifier
+        )
+    }
+}
 }
 
 @OptIn(ExperimentalFoundationApi::class)
