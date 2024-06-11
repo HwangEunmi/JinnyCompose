@@ -1,13 +1,13 @@
 package com.study.jinnycompose.model
 
 sealed class HomeListItem {
-    data class TopPagingContent(
+    data class PagerItem(
         val imageList: List<String>
     ) : HomeListItem()
 
-    data class TopPagingSmallContent(
-        val imageList: List<String>
-    ) : HomeListItem()
+    data object InfoItem : HomeListItem()
 
-    data object Info : HomeListItem()
+    data object RequestReservationDateItem : HomeListItem()
+
+    data object BlankItem : HomeListItem()
 }

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 // TODO(jinny): derivedStateOf vs snapshotFlow
 // TODO(jinny): offset에 대해 정확히 알아보기 (firstVisibleItemOffset이 계속 쓰이는 이유)
 // TODO(jinny): LaunchedEffect vs rememberCoroutineScope의 사용 차이점
+// TODO(jinny): Spacer vs Divider
 @ExperimentalCoroutinesApi
 @Composable
 fun LazyListState.getScrollDirection(): ScrollDirection {

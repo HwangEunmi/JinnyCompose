@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+
 package com.study.jinnycompose.ui.component
 
 import androidx.compose.material.icons.Icons
@@ -13,9 +15,8 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-@ExperimentalMaterial3Api
 @Composable
-fun AppBar(
+fun CustomAppBar(
     title: String?,
     appBarColor: @Composable () -> TopAppBarColors,
     onNavigationIconClick: () -> Unit,

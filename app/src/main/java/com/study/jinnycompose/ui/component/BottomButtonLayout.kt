@@ -16,8 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.study.jinnycompose.ui.theme.JinnyComposeTheme
 
 @Composable
 fun BottomButtonLayout(
@@ -33,6 +38,10 @@ fun BottomButtonLayout(
     ) {
         Text(
             text = "33,000원",
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            ),
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 20.dp)
@@ -40,7 +49,8 @@ fun BottomButtonLayout(
 
         Button(
             modifier = Modifier
-                .align(Alignment.CenterEnd),
+                .align(Alignment.CenterEnd)
+                .padding(horizontal = 10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFFF8E7F)
             ),
@@ -50,5 +60,15 @@ fun BottomButtonLayout(
                 text = "신청하기"
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BottomButtonLayoutPreview() {
+    JinnyComposeTheme {
+        BottomButtonLayout(
+            layoutHeight = 100.dp,
+            onButtonClick = { })
     }
 }
