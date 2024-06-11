@@ -28,6 +28,7 @@ fun CustomAppBar(
         title = {
             title?.let { Text(title) }
         },
+        colors = appBarColor(),
         navigationIcon = {
             IconButton(onClick = onNavigationIconClick) {
                 Icon(
@@ -50,7 +51,6 @@ fun CustomAppBar(
                 )
             }
         },
-        colors = appBarColor(),
         modifier = modifier
     )
 }
