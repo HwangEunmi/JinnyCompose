@@ -3,7 +3,9 @@
 package com.study.jinnycompose.ui
 
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
@@ -22,20 +24,28 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.study.jinnycompose.model.HomeListItem
 import com.study.jinnycompose.ui.component.BottomButtonLayout
+import com.study.jinnycompose.ui.component.ChBottomSheet
 import com.study.jinnycompose.ui.component.CustomAppBar
 import com.study.jinnycompose.ui.data.ScrollDirection
 import com.study.jinnycompose.ui.data.ScrollState
@@ -48,7 +58,7 @@ import kotlin.math.min
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+         enableEdgeToEdge()
         setContent {
             JinnyComposeTheme {
                 MainHome()
@@ -102,7 +112,8 @@ fun MainHome(
         }
 
         MainBottomLayout(
-            scrollState = scrollState
+            scrollState = scrollState,
+            viewModel = viewModel
         )
 
         MainAppBar(
@@ -111,6 +122,7 @@ fun MainHome(
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun MainAppBar(
     scrollState: LazyListState
@@ -168,13 +180,16 @@ fun MainAppBar(
 
 @Composable
 fun MainBottomLayout(
-    scrollState: LazyListState
+    scrollState: LazyListState,
+    viewModel: MainViewModel = viewModel()
 ) {
     val isScrollUp = scrollState.getScrollDirection() == ScrollDirection.Up
     val isScrollStop = scrollState.getScrollStateAfterStop() == ScrollState.Stop
+    var isShowBottomSheet by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         AnimatedVisibility(
             visible = isScrollUp || isScrollStop,
@@ -188,10 +203,21 @@ fun MainBottomLayout(
         ) {
             BottomButtonLayout(
                 layoutHeight = 100.dp,
-                onButtonClick = {},
+                onButtonClick = {
+                    isShowBottomSheet = true
+                },
                 modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
+    }
+
+    if (isShowBottomSheet) {
+        ChBottomSheet(
+            title = "상환가능 대출",
+            bottomSheetList = viewModel.bottomSheetList,
+            onCancelClick = { isShowBottomSheet = false },
+            onConfirmClick = {}
+        )
     }
 }
 
@@ -199,6 +225,6 @@ fun MainBottomLayout(
 @Composable
 fun MainHomePreview() {
     JinnyComposeTheme {
-        MainHome()
+        // MainHome()
     }
 }

@@ -2,12 +2,17 @@ package com.study.jinnycompose.ui
 
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
+import com.study.jinnycompose.model.BottomSheetListItem
 import com.study.jinnycompose.model.HomeListItem
 
 class MainViewModel : ViewModel() {
     private val _homeList = makeHomeList().toMutableStateList()
     val homeList: List<HomeListItem>
         get() = _homeList
+
+    private val _bottomSheetList = makeBottomSheetList().toMutableStateList()
+    val bottomSheetList: List<BottomSheetListItem>
+        get() = _bottomSheetList
 
     private fun makeHomeList() =
         listOf(
@@ -22,6 +27,66 @@ class MainViewModel : ViewModel() {
             HomeListItem.BlankItem,
             HomeListItem.BlankItem,
             HomeListItem.BlankItem
+        )
+
+    private fun makeBottomSheetList() =
+        listOf(
+            BottomSheetListItem(
+                bankingName = "KB국민은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "광주은행",
+                amount = "200,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "신한은행",
+                amount = "300,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "우리은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "KB국민은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "광주은행",
+                amount = "200,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "신한은행",
+                amount = "300,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "우리은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "신한은행",
+                amount = "300,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "우리은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "KB국민은행",
+                amount = "100,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "광주은행",
+                amount = "200,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "신한은행",
+                amount = "300,000,000원"
+            ),
+            BottomSheetListItem(
+                bankingName = "우리은행",
+                amount = "100,000,000원"
+            )
         )
 
     private fun makeImageList() =

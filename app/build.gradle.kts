@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Coil Compose
     implementation(libs.coil.compose)
+    // ConstraintLayout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

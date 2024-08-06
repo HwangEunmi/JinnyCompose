@@ -2,15 +2,23 @@ package com.study.jinnycompose.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,10 +55,24 @@ fun BottomButtonLayout(
                 .padding(start = 20.dp)
         )
 
+        Surface(
+            shape = RoundedCornerShape(50),
+            modifier = Modifier
+                .padding(5.dp)
+                .wrapContentWidth()
+        ) {
+            Text(
+                text = "신청하기",
+                modifier = Modifier
+                    .padding(horizontal = 0.dp, vertical = 8.dp) // 원하는 패딩을 설정하세요
+            )
+        }
+
         Button(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(horizontal = 10.dp),
+                .wrapContentWidth()
+                .padding(top = 50.dp),
+            contentPadding = PaddingValues(0.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFFF8E7F)
             ),
